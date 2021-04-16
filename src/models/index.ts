@@ -5,3 +5,5 @@ export * from './bloque.model';
 export * from './inmueble.model';
 export * from './usuario.model';
 export * from './rol.model';
+export * from './userlog.model';
+export * from './tipo-usuario.model';
