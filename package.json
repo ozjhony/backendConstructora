@@ -55,6 +55,7 @@
     "@loopback/service-proxy": "^3.0.2",
     "loopback-connector-mongodb": "^5.5.0",
     "loopback-connector-mysql": "^5.4.4",
+    "migrations": "^1.0.1",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
