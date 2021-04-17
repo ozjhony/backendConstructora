@@ -1,4 +1,4 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {TipoUsuario} from './tipo-usuario.model';
 
 @model()
@@ -17,10 +17,9 @@ export class Userlog extends Entity {
   nombre_usuario: string;
 
   @property({
-    type: 'string',
-    required: true,
+    type: 'string'
   })
-  clave: string;
+  clave?: string;
 
   @belongsTo(() => TipoUsuario)
   tipoUsuarioId: string;

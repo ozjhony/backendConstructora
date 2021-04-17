@@ -1,29 +1,37 @@
+import {service} from '@loopback/core';
 import {
   Count,
   CountSchema,
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
+  del, get,
+  getModelSchemaRef, param,
+
+
+  patch, post,
+
+
+
+
   put,
-  del,
-  requestBody,
+
+  requestBody
 } from '@loopback/rest';
 import {Userlog} from '../models';
 import {UserlogRepository} from '../repositories';
+import {FuncionesGeneralesService} from '../services';
 
 export class UserlogController {
   constructor(
     @repository(UserlogRepository)
-    public userlogRepository : UserlogRepository,
-  ) {}
+    public userlogRepository: UserlogRepository,
+    @service(FuncionesGeneralesService)
+    public servicioFunciones: FuncionesGeneralesService
+  ) { }
 
   @post('/userlogs', {
     responses: {
@@ -39,13 +47,19 @@ export class UserlogController {
         'application/json': {
           schema: getModelSchemaRef(Userlog, {
             title: 'NewUserlog',
-            exclude: ['id'],
+            exclude: ['id', 'clave'],
           }),
         },
       },
     })
     userlog: Omit<Userlog, 'id'>,
   ): Promise<Userlog> {
+
+    let claveAleatoria = this.servicioFunciones.GenerarClaveAleatoria();
+    console.log(claveAleatoria);
+    let claveCifrada = this.servicioFunciones.CifrarTexto(claveAleatoria);
+    console.log(claveCifrada);
+    userlog.clave = claveCifrada;
     return this.userlogRepository.create(userlog);
   }
 
