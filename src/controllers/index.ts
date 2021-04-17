@@ -10,3 +10,8 @@ export * from './bloque-inmueble.controller';
 export * from './userlog-tipo-usuario.controller';
 export * from './tipo-usuario-userlog.controller';
 export * from './userlog.controller';
+export * from './pais.controller';
+export * from './ciudad.controller';
+export * from './bloque.controller';
+export * from './inmueble.controller';
+export * from './proyecto.controller';
