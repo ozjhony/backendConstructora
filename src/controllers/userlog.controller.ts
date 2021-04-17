@@ -9,7 +9,7 @@ import {
 } from '@loopback/repository';
 import {
   del, get,
-  getModelSchemaRef, param,
+  getModelSchemaRef, HttpErrors, param,
 
 
   patch, post,
@@ -23,8 +23,9 @@ import {
 } from '@loopback/rest';
 import {Keys as llaves} from '../config/keys';
 import {Userlog} from '../models';
+import {Credenciales} from '../models/credenciales.model';
 import {UserlogRepository} from '../repositories';
-import {FuncionesGeneralesService, NotificacionesService} from '../services';
+import {FuncionesGeneralesService, NotificacionesService, SesionService} from '../services';
 
 export class UserlogController {
   constructor(
@@ -33,7 +34,9 @@ export class UserlogController {
     @service(FuncionesGeneralesService)
     public servicioFunciones: FuncionesGeneralesService,
     @service(NotificacionesService)
-    public servicioNotificaciones: NotificacionesService
+    public servicioNotificaciones: NotificacionesService,
+    @service(SesionService)
+    public sesionService: SesionService
   ) { }
 
   @post('/userlogs', {
@@ -81,6 +84,56 @@ export class UserlogController {
     //notificacion via email
     return userlogCreado;
   }
+
+  @post('/identificar-usuario')
+  async validar(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(Credenciales)
+        },
+      },
+    })
+    credenciales: Credenciales
+  ): Promise<object> {
+    let usuario = await this.userlogRepository.findOne({where: {nombre_usuario: credenciales.nombre_usuario, clave: credenciales.clave}});
+
+    if (usuario) {
+      //generar token
+      let token = this.sesionService.GenerarToken(usuario)
+      return {
+        user: {
+          username: usuario.nombre_usuario,
+          role: usuario.tipoUsuarioId
+        },
+        tk: token
+      }
+    }
+    else {
+      throw new HttpErrors[401]("las credenciales no son correctas")
+    }
+
+
+  }
+
+  //async validar(
+  //   @requestBody({
+
+  //     content: {
+  //     'aplication/json': {
+  //   schema: getModelSchemaRef(cred)
+  // }
+  //}
+
+  //})
+  //){
+
+  //}
+
+
+
+
+
 
   @get('/userlogs/count', {
     responses: {

@@ -7,3 +7,4 @@ export * from './tipo-usuario.model';
 export * from './userlog.model';
 export * from './usuario.model';
 
+export * from './credenciales.model';

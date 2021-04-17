@@ -2,7 +2,7 @@ export namespace Keys {
   export const origenCorreoElectronico = 'jhony.1701521539@ucaldas.edu.co';
   export const asuntoNuevoUsuario = '[Nuevo Usuario Constructora] Mensaje de Bienvenida';
   export const tiempoVencimientoJWT = Math.floor(Date.now() / 1000) + (60 * 60 * 12);
-  export const claveSecretaJWT = 'jwt@Prog3*';
+  export const claveSecretaJWT = 'jwt@proyectoProg3';
   export const twilioPhone = '+12019891810';
   export const carpetaImagenPersonas = '../../archivos/personas';
   export const nombreCampoImagenPersona = 'file';
