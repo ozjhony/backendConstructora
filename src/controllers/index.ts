@@ -9,3 +9,4 @@ export * from './inmueble-bloque.controller';
 export * from './bloque-inmueble.controller';
 export * from './userlog-tipo-usuario.controller';
 export * from './tipo-usuario-userlog.controller';
+export * from './userlog.controller';
