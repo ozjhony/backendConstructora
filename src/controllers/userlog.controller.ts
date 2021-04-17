@@ -21,16 +21,19 @@ import {
 
   requestBody
 } from '@loopback/rest';
+import {Keys as llaves} from '../config/keys';
 import {Userlog} from '../models';
 import {UserlogRepository} from '../repositories';
-import {FuncionesGeneralesService} from '../services';
+import {FuncionesGeneralesService, NotificacionesService} from '../services';
 
 export class UserlogController {
   constructor(
     @repository(UserlogRepository)
     public userlogRepository: UserlogRepository,
     @service(FuncionesGeneralesService)
-    public servicioFunciones: FuncionesGeneralesService
+    public servicioFunciones: FuncionesGeneralesService,
+    @service(NotificacionesService)
+    public servicioNotificaciones: NotificacionesService
   ) { }
 
   @post('/userlogs', {
@@ -60,7 +63,23 @@ export class UserlogController {
     let claveCifrada = this.servicioFunciones.CifrarTexto(claveAleatoria);
     console.log(claveCifrada);
     userlog.clave = claveCifrada;
-    return this.userlogRepository.create(userlog);
+    let userlogCreado = await this.userlogRepository.create(userlog);
+
+    let contenido = `Hola, buen día. <br />Usted ha sido registrado en plataforma de nuestra constructora. Sus credenciales de acceso son: <br />
+      <ul>
+        <li>Usuario: ${userlogCreado.nombre_usuario}</li>
+        <li>Contraseña: ${claveAleatoria}</li>
+      </ul>
+
+      `;
+
+
+    if (userlogCreado) {
+      this.servicioNotificaciones.enviarCorreoElectronico(userlogCreado.nombre_usuario, llaves.origenCorreoElectronico, contenido);
+    }
+
+    //notificacion via email
+    return userlogCreado;
   }
 
   @get('/userlogs/count', {
