@@ -8,3 +8,4 @@ export * from './userlog.model';
 export * from './usuario.model';
 
 export * from './credenciales.model';
+export * from './resetear-clave.model';

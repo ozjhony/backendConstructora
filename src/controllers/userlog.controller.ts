@@ -22,7 +22,7 @@ import {
   requestBody
 } from '@loopback/rest';
 import {Keys as llaves} from '../config/keys';
-import {Userlog} from '../models';
+import {ResetearClave, Userlog, Usuario} from '../models';
 import {Credenciales} from '../models/credenciales.model';
 import {UserlogRepository} from '../repositories';
 import {FuncionesGeneralesService, NotificacionesService, SesionService} from '../services';
@@ -85,6 +85,49 @@ export class UserlogController {
     return userlogCreado;
   }
 
+  @post('/reset-password', {
+    responses: {
+      '200': {
+        description: 'Userlog model instance',
+        content: {'application/json': {schema: getModelSchemaRef(ResetearClave)}},
+      },
+    },
+  })
+  async resetPassword(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(ResetearClave),
+        },
+      },
+    })
+    resetearClave: ResetearClave,
+  ): Promise<Object> {
+
+    let userlog = await this.userlogRepository.findOne({where:{nombre_usuario: resetearClave.correo}})
+    if(!userlog)
+    {
+      throw new HttpErrors[401]("Este usuario no existe");
+    } 
+
+    let claveAleatoria = this.servicioFunciones.GenerarClaveAleatoria();
+    console.log(claveAleatoria);
+    let claveCifrada = this.servicioFunciones.CifrarTexto(claveAleatoria);
+    console.log(claveCifrada);
+    userlog.clave = claveCifrada;
+    await this.userlogRepository.update(userlog);
+
+    let contenido = `Hola, buen día. Usted ha solicitado una nueva clave en la plataforma. Sus datos son:
+        Usuario: ${userlog.nombre_usuario} y Contraseña: ${claveAleatoria}
+      `;
+
+
+      this.servicioNotificaciones.EnviarNotificacionPorSMS(userlog.telefono, contenido);
+
+    return {
+      envio: "Ok"
+    };
+  }
   @post('/identificar-usuario')
   async validar(
     @requestBody({

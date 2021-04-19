@@ -21,6 +21,12 @@ export class Userlog extends Entity {
   })
   clave?: string;
 
+  @property({
+    type: 'string',
+    required: true,
+  })
+  telefono: string;
+
   @belongsTo(() => TipoUsuario)
   tipoUsuarioId: string;
 

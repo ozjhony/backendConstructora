@@ -3,7 +3,7 @@ export namespace Keys {
   export const asuntoNuevoUsuario = '[Nuevo Usuario Constructora] Mensaje de Bienvenida';
   export const tiempoVencimientoJWT = Math.floor(Date.now() / 1000) + (60 * 60 * 12);
   export const claveSecretaJWT = 'jwt@proyectoProg3';
-  export const twilioPhone = '+12019891810';
+  export const twilioPhone = '+12012583939';
   export const carpetaImagenPersonas = '../../archivos/personas';
   export const nombreCampoImagenPersona = 'file';
   export const extensionesPermitidasIMG: string[] = ['.PNG', '.JPG', '.JPEG', '.SVG'];
