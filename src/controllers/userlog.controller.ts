@@ -22,7 +22,7 @@ import {
   requestBody
 } from '@loopback/rest';
 import {Keys as llaves} from '../config/keys';
-import {ResetearClave, Userlog, Usuario} from '../models';
+import {ResetearClave, Userlog} from '../models';
 import {Credenciales} from '../models/credenciales.model';
 import {UserlogRepository} from '../repositories';
 import {FuncionesGeneralesService, NotificacionesService, SesionService} from '../services';
@@ -39,7 +39,7 @@ export class UserlogController {
     public sesionService: SesionService
   ) { }
 
-  @post('/userlogs', {
+  @post('/registrarse', {
     responses: {
       '200': {
         description: 'Userlog model instance',
@@ -104,11 +104,10 @@ export class UserlogController {
     resetearClave: ResetearClave,
   ): Promise<Object> {
 
-    let userlog = await this.userlogRepository.findOne({where:{nombre_usuario: resetearClave.correo}})
-    if(!userlog)
-    {
+    let userlog = await this.userlogRepository.findOne({where: {nombre_usuario: resetearClave.correo}})
+    if (!userlog) {
       throw new HttpErrors[401]("Este usuario no existe");
-    } 
+    }
 
     let claveAleatoria = this.servicioFunciones.GenerarClaveAleatoria();
     console.log(claveAleatoria);
@@ -122,7 +121,7 @@ export class UserlogController {
       `;
 
 
-      this.servicioNotificaciones.EnviarNotificacionPorSMS(userlog.telefono, contenido);
+    this.servicioNotificaciones.EnviarNotificacionPorSMS(userlog.telefono, contenido);
 
     return {
       envio: "Ok"

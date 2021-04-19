@@ -5,3 +5,4 @@ export * from './pais.repository';
 export * from './proyecto.repository';
 export * from './tipo-usuario.repository';
 export * from './userlog.repository';
+export * from './cliente.repository';
