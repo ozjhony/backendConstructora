@@ -27,6 +27,18 @@ export class Userlog extends Entity {
   })
   telefono: string;
 
+  @property({
+    type: 'string',
+    required: true,
+  })
+  ciudad: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  documento: string;
+
   @belongsTo(() => TipoUsuario)
   tipoUsuarioId: string;
 

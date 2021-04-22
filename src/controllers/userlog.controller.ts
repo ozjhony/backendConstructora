@@ -22,9 +22,9 @@ import {
   requestBody
 } from '@loopback/rest';
 import {Keys as llaves} from '../config/keys';
-import {ResetearClave, Userlog} from '../models';
+import {Cliente, ResetearClave, Userlog} from '../models';
 import {Credenciales} from '../models/credenciales.model';
-import {UserlogRepository} from '../repositories';
+import {ClienteRepository, UserlogRepository} from '../repositories';
 import {FuncionesGeneralesService, NotificacionesService, SesionService} from '../services';
 
 export class UserlogController {
@@ -36,7 +36,9 @@ export class UserlogController {
     @service(NotificacionesService)
     public servicioNotificaciones: NotificacionesService,
     @service(SesionService)
-    public sesionService: SesionService
+    public sesionService: SesionService,
+    @repository(ClienteRepository)
+    public clienteRepository: ClienteRepository
   ) { }
 
   @post('/registrarse', {
@@ -104,7 +106,15 @@ export class UserlogController {
     resetearClave: ResetearClave,
   ): Promise<Object> {
 
-    let userlog = await this.userlogRepository.findOne({where: {nombre_usuario: resetearClave.correo}})
+    let userlog = await this.userlogRepository.findOne({where: {nombre_usuario: resetearClave.correo}});
+    if (!userlog) {
+      throw new HttpErrors[404]("No encontrado")
+    }
+    let cliente: Cliente = await this.clienteRepository.findById(3);
+    cliente.correo = userlog.nombre_usuario;
+    this.clienteRepository.update(cliente);
+
+
     if (!userlog) {
       throw new HttpErrors[401]("Este usuario no existe");
     }
@@ -126,6 +136,7 @@ export class UserlogController {
     return {
       envio: "Ok"
     };
+
   }
   @post('/identificar-usuario')
   async validar(

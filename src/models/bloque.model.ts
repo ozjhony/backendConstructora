@@ -3,11 +3,11 @@ import {Inmueble} from './inmueble.model';
 import {Proyecto} from './proyecto.model';
 
 @model({
-  setting: {
+  settings: {
     foreignKeys: {
       fk_proyecto_id: {
         name: 'fk_proyecto_id',
-        entity: 'proyecto',
+        entity: 'Proyecto',
         entityKey: 'codigo',
         foreignKey: 'proyectoId',
       },
