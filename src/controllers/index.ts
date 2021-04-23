@@ -18,3 +18,4 @@ export * from './tipo-usuario-userlog.controller';
 export * from './userlog-tipo-usuario.controller';
 export * from './userlog.controller';
 
+export * from './usuario.controller';

@@ -9,7 +9,7 @@ export class Usuario extends Entity {
   nombres: string;
 
   @property({
-    type: 'string',
+    type: 'number',
     id: true,
     generated: true,
   })
@@ -44,6 +44,12 @@ export class Usuario extends Entity {
     required: true,
   })
   ciudad: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  tipo_usuario: string;
 
 
   constructor(data?: Partial<Usuario>) {

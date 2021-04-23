@@ -21,7 +21,6 @@ import {
 
   requestBody
 } from '@loopback/rest';
-import {Keys as llaves} from '../config/keys';
 import {Cliente, ResetearClave, Userlog} from '../models';
 import {Credenciales} from '../models/credenciales.model';
 import {ClienteRepository, UserlogRepository} from '../repositories';
@@ -41,51 +40,53 @@ export class UserlogController {
     public clienteRepository: ClienteRepository
   ) { }
 
-  @post('/registrarse', {
-    responses: {
-      '200': {
-        description: 'Userlog model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Userlog)}},
-      },
-    },
-  })
-  async create(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Userlog, {
-            title: 'NewUserlog',
-            exclude: ['id', 'clave'],
-          }),
-        },
-      },
-    })
-    userlog: Omit<Userlog, 'id'>,
-  ): Promise<Userlog> {
-
-    let claveAleatoria = this.servicioFunciones.GenerarClaveAleatoria();
-    console.log(claveAleatoria);
-    let claveCifrada = this.servicioFunciones.CifrarTexto(claveAleatoria);
-    console.log(claveCifrada);
-    userlog.clave = claveCifrada;
-    let userlogCreado = await this.userlogRepository.create(userlog);
-
-    let contenido = `Hola, buen día. <br />Usted ha sido registrado en plataforma de nuestra constructora. Sus credenciales de acceso son: <br />
-      <ul>
-        <li>Usuario: ${userlogCreado.nombre_usuario}</li>
-        <li>Contraseña: ${claveAleatoria}</li>
-      </ul>
-
-      `;
-
-
-    if (userlogCreado) {
-      this.servicioNotificaciones.enviarCorreoElectronico(userlogCreado.nombre_usuario, llaves.origenCorreoElectronico, contenido);
-    }
-
-    //notificacion via email
-    return userlogCreado;
-  }
+  /* @post('/registrarse', {
+     responses: {
+       '200': {
+         description: 'Userlog model instance',
+         content: {'application/json': {schema: getModelSchemaRef(Userlog)}},
+       },
+     },
+   })
+   async create(
+     @requestBody({
+       content: {
+         'application/json': {
+           schema: getModelSchemaRef(Userlog, {
+             title: 'NewUserlog',
+             exclude: ['id', 'clave'],
+           }),
+         },
+       },
+     })
+     userlog: Omit<Userlog, 'id'>,
+   ): Promise<Userlog> {
+ 
+     let claveAleatoria = this.servicioFunciones.GenerarClaveAleatoria();
+     console.log(claveAleatoria);
+     let claveCifrada = this.servicioFunciones.CifrarTexto(claveAleatoria);
+     console.log(claveCifrada);
+     userlog.clave = claveCifrada;
+     let userlogCreado = await this.userlogRepository.create(userlog);
+ 
+     let contenido = `Hola, buen día. <br />Usted ha sido registrado en plataforma de nuestra constructora. Sus credenciales de acceso son: <br />
+       <ul>
+         <li>Usuario: ${userlogCreado.nombre_usuario}</li>
+         <li>Contraseña: ${claveAleatoria}</li>
+       </ul>
+ 
+       `;
+ 
+ 
+     if (userlogCreado) {
+       this.servicioNotificaciones.enviarCorreoElectronico(userlogCreado.nombre_usuario, llaves.origenCorreoElectronico, contenido);
+     }
+ 
+     //notificacion via email
+     return userlogCreado;
+   }
+ 
+   **/
 
   @post('/reset-password', {
     responses: {
