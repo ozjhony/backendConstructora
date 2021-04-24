@@ -1,14 +1,14 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {belongsTo, Entity, model, property} from '@loopback/repository';
 import {Cliente} from './cliente.model';
 
 @model()
 export class Solicitud extends Entity {
   @property({
-    type: 'string',
+    type: 'number',
     id: true,
     generated: true,
   })
-  codigo?: string;
+  codigo?: number;
 
   @property({
     type: 'date',
