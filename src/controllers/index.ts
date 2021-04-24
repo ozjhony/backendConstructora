@@ -19,3 +19,7 @@ export * from './userlog-tipo-usuario.controller';
 export * from './userlog.controller';
 
 export * from './usuario.controller';
+export * from './informacion-financiera-cliente.controller';
+export * from './cliente-informacion-financiera.controller';
+export * from './solicitud-cliente.controller';
+export * from './cliente-solicitud.controller';

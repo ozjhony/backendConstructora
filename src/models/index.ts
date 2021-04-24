@@ -10,3 +10,5 @@ export * from './usuario.model';
 export * from './credenciales.model';
 export * from './resetear-clave.model';
 export * from './cliente.model';
+export * from './informacion-financiera.model';
+export * from './solicitud.model';
