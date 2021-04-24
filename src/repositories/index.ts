@@ -10,3 +10,4 @@ export * from './userlog.repository';
 export * from './usuario.repository';
 export * from './informacion-financiera.repository';
 export * from './solicitud.repository';
+export * from './registro-pagos.repository';

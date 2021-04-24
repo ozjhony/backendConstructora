@@ -12,3 +12,4 @@ export * from './resetear-clave.model';
 export * from './cliente.model';
 export * from './informacion-financiera.model';
 export * from './solicitud.model';
+export * from './registro-pagos.model';
