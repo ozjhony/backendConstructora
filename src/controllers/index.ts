@@ -28,3 +28,4 @@ export * from './solicitud.controller';
 export * from './registro-pagos-solicitud.controller';
 export * from './solicitud-registro-pagos.controller';
 export * from './registro-pagos.controller';
+export * from './descarga-archivos.controller';
