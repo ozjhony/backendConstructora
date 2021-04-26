@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -30,6 +31,7 @@ export class PaisController {
     public paisRepository: PaisRepository,
   ) { }
 
+  @authenticate('admin')
   @post('/pais')
   @response(200, {
     description: 'Pais model instance',

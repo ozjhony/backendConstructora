@@ -21,7 +21,7 @@ import {
 
   requestBody
 } from '@loopback/rest';
-import {Cliente, ResetearClave, Userlog} from '../models';
+import {ResetearClave, Userlog} from '../models';
 import {Credenciales} from '../models/credenciales.model';
 import {ClienteRepository, UserlogRepository} from '../repositories';
 import {FuncionesGeneralesService, NotificacionesService, SesionService} from '../services';
@@ -61,31 +61,31 @@ export class UserlogController {
      })
      userlog: Omit<Userlog, 'id'>,
    ): Promise<Userlog> {
- 
+
      let claveAleatoria = this.servicioFunciones.GenerarClaveAleatoria();
      console.log(claveAleatoria);
      let claveCifrada = this.servicioFunciones.CifrarTexto(claveAleatoria);
      console.log(claveCifrada);
      userlog.clave = claveCifrada;
      let userlogCreado = await this.userlogRepository.create(userlog);
- 
+
      let contenido = `Hola, buen día. <br />Usted ha sido registrado en plataforma de nuestra constructora. Sus credenciales de acceso son: <br />
        <ul>
          <li>Usuario: ${userlogCreado.nombre_usuario}</li>
          <li>Contraseña: ${claveAleatoria}</li>
        </ul>
- 
+
        `;
- 
- 
+
+
      if (userlogCreado) {
        this.servicioNotificaciones.enviarCorreoElectronico(userlogCreado.nombre_usuario, llaves.origenCorreoElectronico, contenido);
      }
- 
+
      //notificacion via email
      return userlogCreado;
    }
- 
+
    **/
 
   @post('/reset-password', {
@@ -111,9 +111,9 @@ export class UserlogController {
     if (!userlog) {
       throw new HttpErrors[404]("No encontrado")
     }
-    let cliente: Cliente = await this.clienteRepository.findById(3);
-    cliente.correo = userlog.nombre_usuario;
-    this.clienteRepository.update(cliente);
+    //let cliente: Cliente = await this.clienteRepository.findById(3);
+    //cliente.correo = userlog.nombre_usuario;
+    // this.clienteRepository.update(cliente);
 
 
     if (!userlog) {

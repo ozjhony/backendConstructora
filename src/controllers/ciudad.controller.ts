@@ -25,7 +25,7 @@ import {
 import {Ciudad} from '../models';
 import {CiudadRepository} from '../repositories';
 
-@authenticate('admin')
+
 export class CiudadController {
   constructor(
     @repository(CiudadRepository)
@@ -43,7 +43,7 @@ export class CiudadController {
         'application/json': {
           schema: getModelSchemaRef(Ciudad, {
             title: 'NewCiudad',
-            exclude: ['codigo'],
+            exclude: ['codigo', 'psId'],
           }),
         },
       },
