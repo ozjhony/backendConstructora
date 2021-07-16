@@ -49,8 +49,8 @@ export class Usuario extends Entity {
     type: 'string',
     required: true,
   })
-  tipo_usuario: string;
-
+  tipo_usuario?: string;
+  //se deja como opcional
 
   constructor(data?: Partial<Usuario>) {
     super(data);
