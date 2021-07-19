@@ -43,7 +43,7 @@ export class Cliente extends Entity {
 
 
   @property({
-    type: 'date',
+    type: 'string',
   })
   fecha_nacimiento?: string;
 

@@ -64,10 +64,10 @@ export class InformacionFinanciera extends Entity {
   telefonoReferenciaPersonal: string;
 
   @property({
-    type: 'date',
+    type: 'string',
     required: true,
   })
-  tiempoTrabajoActual: string;
+  tiempoTrabajoActual?: string;
 
   @belongsTo(() => Cliente)
   clienteId: number;
