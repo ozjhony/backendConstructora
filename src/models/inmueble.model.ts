@@ -33,6 +33,20 @@ export class Inmueble extends Entity {
   })
   valor: number;
 
+  @property({
+    type: 'number',
+    required: false,
+  })
+  vendidos?: number;
+
+  @property({
+    type: 'number',
+    required: false,
+  })
+  solicitado?: number;
+
+
+
   @belongsTo(() => Bloque)
   bloqueId: number;
 

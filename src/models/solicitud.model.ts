@@ -23,7 +23,7 @@ export class Solicitud extends Entity {
   codigo?: number;
 
   @property({
-    type: 'date',
+    type: 'string',
     required: true,
   })
   fechaSolicitud: string;
@@ -39,6 +39,13 @@ export class Solicitud extends Entity {
     required: true,
   })
   ofertaEconomica: number;
+
+  @property({
+    type: 'string',
+    required: false,
+  })
+  recibo: string;
+
 
   @belongsTo(() => Cliente)
   clienteId: number;
